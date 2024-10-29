@@ -20,14 +20,13 @@ var StudentDataManager = /** @class */ (function () {
             this.clearForm();
         }
         else {
-            alert('Name must contain only alphabetic characters.');
+            alert('Please enter a valid name, without special characters.');
         }
     };
     StudentDataManager.prototype.updateStudent = function (index, student) {
         this.students[index] = student;
         this.saveToLocalStorage();
         this.renderStudentTable();
-        this.clearForm();
     };
     StudentDataManager.prototype.deleteStudent = function (index) {
         this.students.splice(index, 1);
@@ -43,12 +42,19 @@ var StudentDataManager = /** @class */ (function () {
         var nameInput = row.querySelector('input[name="name"]').value.trim();
         var emailInput = row.querySelector('input[name="email"]').value.trim();
         var gradeInput = row.querySelector('input[name="grade"]').value.trim();
-        if (this.isNameValid(nameInput) && emailInput && !isNaN(Number(gradeInput))) {
-            this.updateStudent(index, new Student(nameInput, emailInput, parseInt(gradeInput)));
-            this.editIndex = null;
+        if (!this.isNameValid(nameInput)) {
+            alert('Please ensure the name contains only letters.');
+        }
+        else if (!emailInput.includes('@')) {
+            alert('Please enter a valid email that includes "@" symbol.');
+        }
+        else if (isNaN(Number(gradeInput))) {
+            alert('Please enter a valid grade.');
         }
         else {
-            alert('Please ensure all fields are filled correctly and that the name contains only letters.');
+            // If all validations pass, update the student
+            this.updateStudent(index, new Student(nameInput, emailInput, parseInt(gradeInput)));
+            this.editIndex = null;
         }
     };
     StudentDataManager.prototype.cancelEdit = function () {

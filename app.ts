@@ -52,12 +52,17 @@ class StudentDataManager {
     const emailInput = (row.querySelector('input[name="email"]') as HTMLInputElement).value.trim();
     const gradeInput = (row.querySelector('input[name="grade"]') as HTMLInputElement).value.trim();
 
-    if (this.isNameValid(nameInput) && emailInput.includes('@') && !isNaN(Number(gradeInput))) {
+    if (!this.isNameValid(nameInput)) {
+      alert('Please ensure the name contains only letters.');
+  } else if (!emailInput.includes('@')) {
+      alert('Please enter a valid email that includes "@" symbol.');
+  } else if (isNaN(Number(gradeInput))) {
+      alert('Please enter a valid grade.');
+  } else {
+      // If all validations pass, update the student
       this.updateStudent(index, new Student(nameInput, emailInput, parseInt(gradeInput)));
       this.editIndex = null;
-    } else {
-      alert('Please ensure all fields are filled correctly and that the name contains only letters.');
-    }
+  }
   }
 
   private cancelEdit(): void {
