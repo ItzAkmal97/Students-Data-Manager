@@ -55,6 +55,7 @@ var StudentDataManager = /** @class */ (function () {
             // If all validations pass, update the student
             this.updateStudent(index, new Student(nameInput, emailInput, parseInt(gradeInput)));
             this.editIndex = null;
+            this.renderStudentTable();
         }
     };
     StudentDataManager.prototype.cancelEdit = function () {
